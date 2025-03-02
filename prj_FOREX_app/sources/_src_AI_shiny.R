@@ -24,7 +24,7 @@
 
 # Creare un oggetto chat con Llama 3 utilizzando Ollama
 chat <- chat_ollama(
-  model = "bge-m3",
+  model = "phi4-mini",
   system_prompt = "Devi essere un assistente esperto di forex e trading."
 )
 
