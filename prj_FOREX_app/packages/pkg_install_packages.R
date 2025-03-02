@@ -13,6 +13,7 @@
     install.packages("remotes")
     library(remotes)
   }
+  #----
   if(!require(rlist)){
     install.packages("rlist")
     library(rlist)
@@ -57,6 +58,10 @@
     install.packages(file.path(path_packages, "common_1.1.3.tar.gz"), repos=NULL, type="source")
     install.packages(file.path(path_packages, "logr_1.3.8.tar.gz"), repos=NULL, type="source")
     library(logr)
+  }
+  if(!require(feather)){
+    install.packages("feather")
+    library(feather)
   }
   
   # Parameters Optimization ----
@@ -131,6 +136,10 @@
     install.packages("tidyquant")
     library(tidyquant)
   }
+  # if(!require(findata)){
+  #   remotes::install_github("MislavSag/findata")
+  #   library(findata)
+  # }
   
   # Time Series models ----
   message("Upload ", "Time Series models packages")
@@ -141,6 +150,10 @@
   if(!require(modeltime)){
     install.packages("modeltime")
     library(modeltime)
+  }
+  if(!require(modeltime.ensemble)){
+    install.packages("modeltime.ensemble")
+    library(modeltime.ensemble)
   }
   if(!require(fable)){
     install.packages("fable")
@@ -193,6 +206,10 @@
   if(!require(rdbnomics)){
     install.packages("rdbnomics")
     library(rdbnomics)
+  }
+  if(!require(tune)){
+    install.packages("tune")
+    library(tune)
   }
   
   # Graph packages ----

@@ -16,7 +16,7 @@ path_folder<<-getwd()
     source(file.path(path_packages, "pkg_install_packages.R"))
     
     source(file.path(path_sources, "src_useful_functions.R"))
-    source(file.path(path_sources, "src_forex_tqGet.R"))
+    source(file.path(path_sources, "src_forex_data_tqGet.R"))
     source(file.path(path_sources, "src_forex_metrics.R"))
     source(file.path(path_sources, "src_forex_plotly.R"))
 }
@@ -25,7 +25,7 @@ path_folder<<-getwd()
 ##' Update the FX data
 fnc_tqGet_FX_Data(last_Week_Delete=(Sys.Date()-7),yesterday_Date=(Sys.Date()-1))
 ##' Update the FX metrics
-fnc_metrics_FX_Data(overwrite_Metrics=F)
+fnc_metrics_FX_Data(overwrite_Metrics=TRUE)
 fnc_correlation_FX_Data()
 
 # Modules ----
@@ -84,40 +84,26 @@ server<-function(input, output, session){
                         ,FX_Periodicity="daily"
                         ,grp_Type="FX_candlestick"
     )
-    graph_plotly_server("grp_plotly_FX_rsi_d1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
-                            bindCache(input$slcInp_FXrate_d1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_d1)
-                        ,FX_Periodicity="daily"
-                        ,grp_Type="FX_rsi"
-    )
-    graph_plotly_server("grp_plotly_FX_ichimoku_d1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
-                            bindCache(input$slcInp_FXrate_d1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_d1)
-                        ,FX_Periodicity="daily"
-                        ,grp_Type="FX_ichimoku"
-    )
-    graph_plotly_server("grp_plotly_FX_stoch_d1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
-                            bindCache(input$slcInp_FXrate_d1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_d1)
-                        ,FX_Periodicity="daily"
-                        ,grp_Type="FX_stoch"
-    )
-    graph_plotly_server("grp_plotly_FX_adx_d1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
-                            bindCache(input$slcInp_FXrate_d1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_d1)
-                        ,FX_Periodicity="daily"
-                        ,grp_Type="FX_adx"
-    )
     graph_plotly_server("grp_plotly_FX_volatility_d1"
                         ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
                             bindCache(input$slcInp_FXrate_d1)%>%
                             bindEvent(input$buttInp_getFXgraphs_d1)
                         ,FX_Periodicity="daily"
                         ,grp_Type="FX_volatility"
+    )
+    graph_plotly_server("grp_plotly_FX_trendFollowing_d1"
+                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
+                            bindCache(input$slcInp_FXrate_d1)%>%
+                            bindEvent(input$buttInp_getFXgraphs_d1)
+                        ,FX_Periodicity="daily"
+                        ,grp_Type="FX_trendFollowing"
+    )
+    graph_plotly_server("grp_plotly_FX_momentum_d1"
+                        ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
+                            bindCache(input$slcInp_FXrate_d1)%>%
+                            bindEvent(input$buttInp_getFXgraphs_d1)
+                        ,FX_Periodicity="daily"
+                        ,grp_Type="FX_momentum"
     )
     graph_plotly_server("grp_plotly_FX_macd_d1"
                         ,FX_Selected=reactive(input$slcInp_FXrate_d1)%>%
@@ -134,40 +120,26 @@ server<-function(input, output, session){
                         ,FX_Periodicity="weekly"
                         ,grp_Type="FX_candlestick"
     )
-    graph_plotly_server("grp_plotly_FX_rsi_w1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
-                            bindCache(input$slcInp_FXrate_w1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_w1)
-                        ,FX_Periodicity="weekly"
-                        ,grp_Type="FX_rsi"
-    )
-    graph_plotly_server("grp_plotly_FX_ichimoku_w1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
-                            bindCache(input$slcInp_FXrate_w1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_w1)
-                        ,FX_Periodicity="weekly"
-                        ,grp_Type="FX_ichimoku"
-    )
-    graph_plotly_server("grp_plotly_FX_stoch_w1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
-                            bindCache(input$slcInp_FXrate_w1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_w1)
-                        ,FX_Periodicity="weekly"
-                        ,grp_Type="FX_stoch"
-    )
-    graph_plotly_server("grp_plotly_FX_adx_w1"
-                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
-                            bindCache(input$slcInp_FXrate_w1)%>%
-                            bindEvent(input$buttInp_getFXgraphs_w1)
-                        ,FX_Periodicity="weekly"
-                        ,grp_Type="FX_adx"
-    )
     graph_plotly_server("grp_plotly_FX_volatility_w1"
                         ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
                             bindCache(input$slcInp_FXrate_w1)%>%
                             bindEvent(input$buttInp_getFXgraphs_w1)
                         ,FX_Periodicity="weekly"
                         ,grp_Type="FX_volatility"
+    )
+    graph_plotly_server("grp_plotly_FX_trendFollowing_w1"
+                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
+                            bindCache(input$slcInp_FXrate_w1)%>%
+                            bindEvent(input$buttInp_getFXgraphs_w1)
+                        ,FX_Periodicity="weekly"
+                        ,grp_Type="FX_trendFollowing"
+    )
+    graph_plotly_server("grp_plotly_FX_momentum_w1"
+                        ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%
+                            bindCache(input$slcInp_FXrate_w1)%>%
+                            bindEvent(input$buttInp_getFXgraphs_w1)
+                        ,FX_Periodicity="weekly"
+                        ,grp_Type="FX_momentum"
     )
     graph_plotly_server("grp_plotly_FX_macd_w1"
                         ,FX_Selected=reactive(input$slcInp_FXrate_w1)%>%

@@ -14,6 +14,7 @@
     path_input_tqGet<<-file.path(path_input, "tqGet")
     path_output<<-file.path(path_data, "output")
     path_output_metrics<<-file.path(path_output, "metrics")
+    path_output_forecast<<-file.path(path_output, "forecast")
     path_output_graphs<<-file.path(path_output, "graphs")
     path_output_tables<<-file.path(path_output, "tables")
 }

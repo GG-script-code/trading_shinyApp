@@ -137,21 +137,13 @@ body<-dashboardBody(
           ,collapsed=FALSE
           ,tabBox(
             width=NULL
-            ,tabPanel(title=HTML("<b>D1 RSI</b>")%>%
+            ,tabPanel(title=HTML("<b>D1 Trend Following</b>")%>%
                         h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_rsi_d1")
+                      ,graph_plotly_UI("grp_plotly_FX_trendFollowing_d1")
                       ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>D1 ichimoku</b>")%>%
+            ,tabPanel(title=HTML("<b>D1 Momentum</b>")%>%
                         h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_ichimoku_d1")
-                      ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>D1 stoch</b>")%>%
-                        h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_stoch_d1")
-                      ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>D1 ADX</b>")%>%
-                        h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_adx_d1")
+                      ,graph_plotly_UI("grp_plotly_FX_momentum_d1")
                       ,width=12,status="info")
             ,tabPanel(title=HTML("<b>D1 MACD</b>")%>%
                         h4(align="center")
@@ -199,21 +191,13 @@ body<-dashboardBody(
           ,collapsed=FALSE
           ,tabBox(
             width=NULL
-            ,tabPanel(title=HTML("<b>W1 RSI</b>")%>%
+            ,tabPanel(title=HTML("<b>W1 Trend Following</b>")%>%
                         h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_rsi_w1")
+                      ,graph_plotly_UI("grp_plotly_FX_trendFollowing_w1")
                       ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>W1 ichimoku</b>")%>%
+            ,tabPanel(title=HTML("<b>W1 Momentum</b>")%>%
                         h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_ichimoku_w1")
-                      ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>W1 stoch</b>")%>%
-                        h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_stoch_w1")
-                      ,width=12,status="info")
-            ,tabPanel(title=HTML("<b>W1 ADX</b>")%>%
-                        h4(align="center")
-                      ,graph_plotly_UI("grp_plotly_FX_adx_w1")
+                      ,graph_plotly_UI("grp_plotly_FX_momentum_w1")
                       ,width=12,status="info")
             ,tabPanel(title=HTML("<b>W1 MACD</b>")%>%
                         h4(align="center")

@@ -26,7 +26,7 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
   
   path_Output_DT<-file.path(path_Output_Tables,"DT",FX_Periodicity)
   
-  FX_Metrics_List<-list.files(file.path(path_Output_Metrics,FX_Periodicity),pattern="^2.*Rds")
+  FX_Metrics_List<-list.files(file.path(path_Output_Metrics,FX_Periodicity),pattern="^2.*feather")
   
   FX_data_summary<-tibble(symbol=as.character(NA)
                           ,from=as.character(NA)
@@ -34,30 +34,17 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
                           ,close=as.numeric(NA)
                           ,close_D=as.numeric(NA)
                           ,close_Perc=as.character(NA)
-                          #,close_S=as.numeric(NA)
-                          ,RSI10=as.numeric(NA)
-                          #,RSI10_S=as.numeric(NA)
-                          ,RSI14=as.numeric(NA)
-                          #,RSI14_S=as.numeric(NA)
-                          ,RSI20=as.numeric(NA)
-                          #,RSI20_S=as.numeric(NA)
-                          ,stoch_SMA=as.numeric(NA)
-                          #,stoch_SMA_S=as.numeric(NA)
-                          ,stoch_EMA=as.numeric(NA)
-                          #,stoch_EMA_S=as.numeric(NA)
-                          ,adx_SMA=as.numeric(NA)
-                          #,adx_SMA_S=as.numeric(NA)
-                          ,adx_EMA=as.numeric(NA)
-                          #,adx_EMA_S=as.numeric(NA)
+                          ,RSI=as.numeric(NA)
+                          ,stoch=as.numeric(NA)
+                          ,adx=as.numeric(NA)
                           ,volatility=as.numeric(NA)
-                          #,volatility_S=as.numeric(NA)
   )
   
   for(FX_Metrics_File in FX_Metrics_List){
     # FX_selected="GBPUSD";
     # FX_Metrics_File<-FX_Metrics_List[str_detect(FX_Metrics_List,FX_selected)%>%which()]
     
-    FX_Metrics_Data<-read_rds(file.path(path_Output_Metrics,FX_Periodicity,FX_Metrics_File))%>%
+    FX_Metrics_Data<-read_feather(file.path(path_Output_Metrics,FX_Periodicity,FX_Metrics_File))%>%
       #arrange(date%>%desc())%>%
       slice_tail(n=10)
     
@@ -72,29 +59,17 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
     fx_lm<-stats::lm(FX_Metrics_Data$close%>%last(3)~index_lm)
     (fx_close_slope<-coef(fx_lm)[2])
     
-    (fx_rsi10<-FX_Metrics_Data$RSI_10%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$RSI_10%>%last(3)~index_lm)
-    (fx_rsi10_slope<-coef(fx_lm)[2])
-    (fx_rsi14<-FX_Metrics_Data$RSI_14%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$RSI_14%>%last(3)~index_lm)
-    (fx_rsi14_slope<-coef(fx_lm)[2])
-    (fx_rsi20<-FX_Metrics_Data$RSI_20%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$RSI_20%>%last(3)~index_lm)
-    (fx_rsi20_slope<-coef(fx_lm)[2])
+    (fx_rsi<-FX_Metrics_Data$RSI%>%last(1))
+    fx_lm<-stats::lm(FX_Metrics_Data$RSI%>%last(3)~index_lm)
+    (fx_rsi_slope<-coef(fx_lm)[2])
     
-    (fx_stochSMA<-FX_Metrics_Data$stoch_SMA%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$stoch_SMA%>%last(3)~index_lm)
-    (fx_stochSMA_slope<-coef(fx_lm)[2])
-    (fx_stochEMA<-FX_Metrics_Data$stoch_EMA%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$stoch_EMA%>%last(3)~index_lm)
-    (fx_stochEMA_slope<-coef(fx_lm)[2])
+    (fx_stoch<-FX_Metrics_Data$stoch%>%last(1))
+    fx_lm<-stats::lm(FX_Metrics_Data$stoch%>%last(3)~index_lm)
+    (fx_stoch_slope<-coef(fx_lm)[2])
     
-    (fx_adxSMA<-FX_Metrics_Data$ADX_SMA%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$ADX_SMA%>%last(3)~index_lm)
-    (fx_adxSMA_slope<-coef(fx_lm)[2])
-    (fx_adxEMA<-FX_Metrics_Data$ADX_EMA%>%last(1))
-    fx_lm<-stats::lm(FX_Metrics_Data$ADX_EMA%>%last(3)~index_lm)
-    (fx_adxEMA_slope<-coef(fx_lm)[2])
+    (fx_adx<-FX_Metrics_Data$ADX%>%last(1))
+    fx_lm<-stats::lm(FX_Metrics_Data$ADX%>%last(3)~index_lm)
+    (fx_adx_slope<-coef(fx_lm)[2])
     
     (fx_volatility<-(FX_Metrics_Data$volatility%>%last(1))*100)
     fx_lm<-stats::lm(FX_Metrics_Data$volatility%>%last(3)~index_lm)
@@ -106,23 +81,10 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
                                           ,close=fx_close
                                           ,close_D=fx_close_delta
                                           ,close_Perc=fx_close_delta_perc
-                                          #,close_S=fx_close_slope
-                                          ,RSI10=fx_rsi10
-                                          #,RSI10_S=fx_rsi10_slope
-                                          ,RSI14=fx_rsi14
-                                          #,RSI14_S=fx_rsi14_slope
-                                          ,RSI20=fx_rsi20
-                                          #,RSI20_S=fx_rsi20_slope
-                                          ,stoch_SMA=fx_stochSMA
-                                          #,stoch_SMA_S=fx_stochSMA_slope
-                                          ,stoch_EMA=fx_stochEMA
-                                          #,stoch_EMA_S=fx_stochEMA_slope
-                                          ,adx_SMA=fx_adxSMA
-                                          #,adx_SMA_S=fx_adxSMA_slope
-                                          ,adx_EMA=fx_adxEMA
-                                          #,adx_EMA_S=fx_adxEMA_slope
+                                          ,RSI=fx_rsi
+                                          ,stoch=fx_stoch
+                                          ,adx=fx_adx
                                           ,volatility=fx_volatility
-                                          #,volatility_S=fx_volatility_slope
     ))%>%
       na.omit()%>%
       arrange(symbol)%>%
@@ -130,11 +92,9 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
   }
   
   table_DT_FX_summary<-FX_data_summary%>%
-    rename("FX"="symbol","cls"="close","cls %"="close_Perc","cls D"="close_D"
-           ,"rsi10"="RSI10","rsi14"="RSI14","rsi20"="RSI20"
-           ,"stochSMA"="stoch_SMA","stochEMA"="stoch_EMA"
-           ,"adxSMA"="adx_SMA","adxEMA"="adx_EMA"
-           ,"vol"="volatility"
+    rename("FX"="symbol"
+           ,"cls"="close","cls %"="close_Perc","cls D"="close_D"
+           ,"volat"="volatility"
     )%>%
     formattable::formattable()%>%
     formattable::as.datatable(class='compact cell-border stripe'
@@ -157,10 +117,10 @@ fun_DT_FX_summary<-function(FX_Periodicity="daily" # "daily" "weekly"
                                                                ,paste0('Summary table'))
     )%>%
     formatRound(columns=c("cls","cls D"),digits=4)%>%
-    formatRound(columns=c("rsi10","rsi14","rsi20"
-                          ,"stochSMA","stochEMA"
-                          ,"adxSMA","adxEMA"
-                          ,"vol"),digits=1)
+    formatRound(columns=c("RSI"
+                          ,"stoch"
+                          ,"adx"
+                          ,"volat"),digits=1)
   
   if(save_Widget){
     htmlwidgets::saveWidget(table_DT_FX_summary
